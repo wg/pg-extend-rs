@@ -214,3 +214,9 @@ impl PgTypeInfo for () {
         PgType::Null
     }
 }
+
+impl<T> PgTypeInfo for Option<T> where T: PgTypeInfo {
+    fn pg_type() -> PgType {
+        T::pg_type()
+    }
+}

@@ -279,6 +279,7 @@ fn impl_info_for_fn(item: &syn::Item) -> TokenStream {
 
     // ret and library_path are replacements at runtime
     let sql_stmt = format!(
+        // FIXME: Add/remove STRICT keywords based on Option<> arguments.
         "CREATE or REPLACE FUNCTION {}({}) {{ret}} AS '{{library_path}}', '{}' LANGUAGE C STRICT;",
         func_name, sql_params, func_wrapper_name,
     );
