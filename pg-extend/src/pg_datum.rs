@@ -113,6 +113,15 @@ impl From<i64> for PgDatum {
     }
 }
 
+impl TryFromPgDatum for usize {
+    fn try_from(datum: PgDatum) -> Result<Self, &'static str> {
+        match datum.0 {
+            Some(d) => Ok(d as usize),
+            None    => Err("datum was NULL"),
+        }
+    }
+}
+
 impl TryFromPgDatum for String {
     fn try_from(datum: PgDatum) -> Result<Self, &'static str> {
         let cstr = CString::try_from(datum)?;

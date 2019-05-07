@@ -197,6 +197,16 @@ impl PgTypeInfo for i64 {
     }
 }
 
+impl PgTypeInfo for usize {
+    fn pg_type() -> PgType {
+        match std::mem::size_of::<Self>() {
+            4 => PgType::Int4,
+            8 => PgType::Int8,
+            n => panic!("unsupported usize: {}", n),
+        }
+    }
+}
+
 impl PgTypeInfo for String {
     fn pg_type() -> PgType {
         PgType::Text
